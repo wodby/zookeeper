@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+set -eo pipefail
+
+if [[ -n "${DEBUG}" ]]; then
+    set -x
+fi
+
+chown -R zookeeper:zookeeper /data /datalog /logs

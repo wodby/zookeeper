@@ -1,0 +1,56 @@
+name: Build docker image
+
+on:
+  push:
+    branches:
+      - main
+
+    tags:
+      - '*'
+
+env:
+  BASE_IMAGE_STABILITY_TAG: 2.19.1
+  ZOOKEEPER39: '3.9.4'
+
+jobs:
+  zookeeper39-build:
+    strategy:
+      matrix:
+        arch:
+          - amd64
+          - arm64
+        include:
+          - arch: amd64
+            runner: ubuntu-24.04
+          - arch: arm64
+            runner: ubuntu-24.04-arm
+    runs-on: ${{ matrix.runner }}
+    steps:
+      - uses: actions/checkout@v6
+      - uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+      - name: build and push
+        env:
+          ZOO_VER: ${{ env.ZOOKEEPER39 }}
+          ARCH: ${{ matrix.arch }}
+        run: |
+          make
+          make test
+          make push
+  zookeeper39-push:
+    runs-on: ubuntu-latest
+    needs:
+      - zookeeper39-build
+    steps:
+      - uses: actions/checkout@v6
+      - uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+      - uses: ./.github/actions
+        with:
+          version: ${{ env.ZOOKEEPER39 }}
+          latest: true
+          latest_major: true

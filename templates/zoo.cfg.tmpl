@@ -1,0 +1,13 @@
+dataDir=/data
+dataLogDir=/datalog
+tickTime={{ getenv "ZOO_TICK_TIME" "2000" }}
+initLimit={{ getenv "ZOO_INIT_LIMIT" "5" }}
+syncLimit={{ getenv "ZOO_SYNC_LIMIT" "2" }}
+autopurge.snapRetainCount={{ getenv "ZOO_AUTOPURGE_SNAP_RETAIN_COUNT" "3" }}
+autopurge.purgeInterval={{ getenv "ZOO_AUTOPURGE_PURGE_INTERVAL" "0" }}
+maxClientCnxns={{ getenv "ZOO_MAX_CLIENT_CNXNS" "60" }}
+standaloneEnabled={{ getenv "ZOO_STANDALONE_ENABLED" "true" }}
+admin.enableServer={{ getenv "ZOO_ADMIN_ENABLE_SERVER" "true" }}
+4lw.commands.whitelist={{ getenv "ZOO_4LW_COMMANDS_WHITELIST" "stat,ruok,conf,isro" }}
+
+server.1={{ getenv "ZOO_SERVERS" "localhost:2888:3888;2181" }}

@@ -12,16 +12,20 @@ ENV ZOO_HOME=/opt/zookeeper \
     ZOO_LOG_DIR=/logs
 
 RUN set -eux; \
-    addgroup -g 1000 "$ZOO_GROUP"; \
-    adduser -D -H -u 1000 -G "$ZOO_GROUP" "$ZOO_USER"; \
+    \
     apk add --no-cache \
       bash \
       make \
       sudo \
       curl \
+      shadow \
       tzdata \
       ca-certificates; \
     update-ca-certificates; \
+    \
+    groupadd -g 1000 zookeeper; \
+    useradd  -u 1000 -m -s /bin/bash -g zookeeper zookeeper; \
+    \
     apk add --update --no-cache -t .zoo-build-deps git; \
     \
     mkdir -p "$ZOO_HOME" "$ZOO_CONF_DIR" "$ZOO_DATA_DIR" "$ZOO_DATA_LOG_DIR" "$ZOO_LOG_DIR"; \
@@ -42,17 +46,15 @@ RUN set -eux; \
     git checkout "${latest}"; \
     mv /tmp/alpine/bin/* /usr/local/bin; \
     \
+    touch /conf/zoo.cfg; \
+    chown zookeeper:zookeeper /conf/zoo.cfg; \
+    \
     { \
         echo "Defaults secure_path=\"$PATH\""; \
-        echo 'Defaults env_keep += "ZOO_DATA_DIR ZOO_DATA_LOG_DIR ZOO_LOG_DIR"' ; \
         \
-        if [[ -n "${PHP_DEV}" ]]; then \
-            echo 'wodby ALL=(root) NOPASSWD:SETENV:ALL'; \
-        else \
-            echo -n 'wodby ALL=(root) NOPASSWD:SETENV: ' ; \
-            echo '/usr/local/bin/init_container' ; \
-        fi; \
-    } | tee /etc/sudoers.d/wodby; \
+        echo -n 'zookeeper ALL=(root) NOPASSWD:SETENV: ' ; \
+        echo '/usr/local/bin/init_container' ; \
+    } | tee /etc/sudoers.d/zookeeper; \
     \
     apk del --purge .zoo-build-deps; \
     rm -rf \
@@ -69,6 +71,8 @@ COPY bin /usr/local/bin/
 VOLUME ["/data", "/datalog", "/logs"]
 
 EXPOSE 2181 2888 3888 8080
+
+USER zookeeper
 
 ENTRYPOINT ["/docker-entrypoint.sh"]
 CMD ["zkServer.sh", "start-foreground"]

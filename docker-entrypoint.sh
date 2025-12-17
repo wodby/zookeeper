@@ -17,7 +17,7 @@ _gotpl "zoo.cfg.tmpl" "$ZOO_HOME/conf/zoo.cfg"
 if [[ -z $ZOO_SERVERS ]]; then
     echo "server.1=localhost:2888:3888;2181" >> "$ZOO_HOME/conf/zoo.cfg"
 else
-    local server_id_with_jumps
+    server_id_with_jumps=""
     [[ "$ZOO_SERVERS" == *"::"* ]] && server_id_with_jumps=1
     read -r -a zookeeper_servers_list <<<"${ZOO_SERVERS//[;, ]/ }"
     for server in "${zookeeper_servers_list[@]}"; do

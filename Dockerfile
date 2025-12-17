@@ -9,7 +9,8 @@ ENV ZOO_HOME=/opt/zookeeper \
     ZOO_DATA_DIR=/data \
     ZOO_DATA_LOG_DIR=/datalog \
     ZOO_CONF_DIR=/conf \
-    ZOO_LOG_DIR=/logs
+    ZOO_LOG_DIR=/logs \
+    PATH="/opt/zookeeper/bin:$PATH"
 
 RUN set -eux; \
     \
@@ -60,9 +61,6 @@ RUN set -eux; \
         /tmp/* \
         /var/cache/apk/* ;
 
-
-ENV PATH="$ZOO_HOME/bin:$PATH"
-
 COPY docker-entrypoint.sh /
 COPY templates /etc/gotpl/
 COPY bin /usr/local/bin/
@@ -72,6 +70,8 @@ VOLUME ["/data", "/datalog", "/logs"]
 EXPOSE 2181 2888 3888 8080
 
 USER zookeeper
+
+WORKDIR /opt/zookeeper
 
 ENTRYPOINT ["/docker-entrypoint.sh"]
 CMD ["zkServer.sh", "start-foreground"]

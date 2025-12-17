@@ -12,10 +12,14 @@ _gotpl() {
     fi
 }
 
+_add_standalone_server() {
+    echo "server.1=localhost:2888:3888;2181" >> "$ZOO_HOME/conf/zoo.cfg"
+}
+
 _gotpl "zoo.cfg.tmpl" "$ZOO_HOME/conf/zoo.cfg"
 
 if [[ -z $ZOO_SERVERS ]]; then
-    echo "server.1=localhost:2888:3888;2181" >> "$ZOO_HOME/conf/zoo.cfg"
+    _add_standalone_server
 else
     server_id_with_jumps=""
     [[ "$ZOO_SERVERS" == *"::"* ]] && server_id_with_jumps=1
@@ -51,6 +55,7 @@ else
             done
         fi
     else
+        _add_standalone_server
         echo "No additional servers were specified. ZooKeeper will run in standalone mode..."
     fi
 fi

@@ -8,9 +8,9 @@ __check_defined = \
       $(error Required parameter is missing: $1$(if $2, ($2))))
 
 host ?= localhost
-max_try ?= 1
+max_try ?= 5
 wait_seconds ?= 3
-delay_seconds ?= 2
+delay_seconds ?= 5
 
 command ?= echo "ruok" | nc -w 2 $(host) 2181 | grep -q "imok"
 service = ZooKeeper

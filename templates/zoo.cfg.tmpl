@@ -9,5 +9,3 @@ maxClientCnxns={{ getenv "ZOO_MAX_CLIENT_CNXNS" "60" }}
 standaloneEnabled={{ getenv "ZOO_STANDALONE_ENABLED" "true" }}
 admin.enableServer={{ getenv "ZOO_ADMIN_ENABLE_SERVER" "true" }}
 4lw.commands.whitelist={{ getenv "ZOO_4LW_COMMANDS_WHITELIST" "stat,ruok,conf,isro" }}
-
-server.1={{ getenv "ZOO_SERVERS" "localhost:2888:3888;2181" }}

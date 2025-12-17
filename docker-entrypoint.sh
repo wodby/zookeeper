@@ -12,7 +12,7 @@ _gotpl() {
     fi
 }
 
-_gotpl "zoo.cfg.tmpl" "/conf/zoo.cfg"
+_gotpl "zoo.cfg.tmpl" "$ZOO_HOME/conf/zoo.cfg"
 
 if [[ ! -f "$ZOO_DATA_DIR/myid" ]]; then
     HOSTNAME="$(hostname -s)"

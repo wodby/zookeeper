@@ -35,7 +35,6 @@ RUN set -eux; \
     curl -fsSL "$ZOO_URL" -o "/tmp/${ZOO_TGZ}"; \
     tar -xzf "/tmp/${ZOO_TGZ}" --strip=1 -C /opt/zookeeper; \
     rm -rf "/tmp/${ZOO_TGZ}" "$ZOO_HOME"/docs "$ZOO_HOME"/recipes; \
-    rm -rf "$ZOO_HOME/conf" && ln -s "$ZOO_CONF_DIR" "$ZOO_HOME/conf"; \
     \
     gotpl_url="https://github.com/wodby/gotpl/releases/latest/download/gotpl-${TARGETPLATFORM/\//-}.tar.gz"; \
     wget -qO- "${gotpl_url}" | tar xz --no-same-owner -C /usr/local/bin; \
@@ -46,8 +45,8 @@ RUN set -eux; \
     git checkout "${latest}"; \
     mv /tmp/alpine/bin/* /usr/local/bin; \
     \
-    touch /conf/zoo.cfg; \
-    chown zookeeper:zookeeper /conf/zoo.cfg; \
+    touch "$ZOO_HOME/conf/zoo.cfg"; \
+    chown zookeeper:zookeeper "$ZOO_HOME/conf/zoo.cfg"; \
     \
     { \
         echo "Defaults secure_path=\"$PATH\""; \

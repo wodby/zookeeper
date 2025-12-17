@@ -39,19 +39,19 @@ else
         if [[ -n "${server_id_with_jumps}" ]]; then
             for server in "${zookeeper_servers_list[@]}"; do
                 read -r -a srv <<<"${server//::/ }"
-                info "Adding server: ${srv[0]} with id: ${srv[1]}"
+                echo "Adding server: ${srv[0]} with id: ${srv[1]}"
                 echo "server.${srv[1]}=${srv[0]};2181" >> "$ZOO_HOME/conf/zoo.cfg"
             done
         else
             local i=1
             for server in "${zookeeper_servers_list[@]}"; do
-                info "Adding server: ${server}"
+                echo "Adding server: ${server}"
                 echo "server.$i=${server};2181" >> "$ZOO_HOME/conf/zoo.cfg"
                 ((i++))
             done
         fi
     else
-        info "No additional servers were specified. ZooKeeper will run in standalone mode..."
+        echo "No additional servers were specified. ZooKeeper will run in standalone mode..."
     fi
 fi
 

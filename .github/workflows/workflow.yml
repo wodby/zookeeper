@@ -10,7 +10,7 @@ on:
 
 env:
   BASE_IMAGE_STABILITY_TAG: 2.19.1
-  ZOOKEEPER39: '3.9.4'
+  ZOOKEEPER39: '3.9.5'
 
 jobs:
   zookeeper39-build:

@@ -12,7 +12,7 @@ Major and minor tags use the repository release number. Full-version tags such a
 Every published versioned revision tag has a matching annotated Git tag pointing to its release commit.
 Existing tags remain available after support for their major or minor version ends.
 See [release tags](https://github.com/wodby/zookeeper/tags) for available revisions and the [image revision policy](https://github.com/wodby/images#image-revisions) for upgrade guidance.
-Existing SemVer image tags remain available.
+Previously published image tags remain available.
 
 - All images are based on Alpine Linux
 - Base image: [eclipse-temurin](https://github.com/adoptium/containers)

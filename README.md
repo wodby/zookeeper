@@ -6,7 +6,10 @@
 
 ## Docker Images
 
-❗️For better reliability we release images with stability tags (`wodby/zookeeper:3-X.X.X`) which correspond to [git tags](https://github.com/wodby/zookeeper/releases). We strongly recommend using images only with stability tags.
+Use image revision tags such as `wodby/zookeeper:3-rN` to select a Wodby image revision.
+The `rN` suffix identifies the image revision separately from the upstream software version.
+See [release tags](https://github.com/wodby/zookeeper/tags) for available revisions and the [image revision policy](https://github.com/wodby/images#image-revisions) for upgrade guidance.
+Existing SemVer image tags remain available.
 
 - All images are based on Alpine Linux
 - Base image: [eclipse-temurin](https://github.com/adoptium/containers)

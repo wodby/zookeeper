@@ -12,6 +12,9 @@ ENV ZOO_HOME=/opt/zookeeper \
     ZOO_LOG_DIR=/logs \
     PATH="/opt/zookeeper/bin:$PATH"
 
+# Refresh inherited security fixes when rebuilding this image.
+RUN apk upgrade --no-cache
+
 RUN set -eux; \
     \
     apk add --no-cache \

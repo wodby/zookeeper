@@ -11,7 +11,7 @@ on:
 
 env:
   BASE_IMAGE_REVISION: 2.19.1
-  ZOOKEEPER39: '3.9.6'
+  ZOOKEEPER39: '3.9.7'
 
 jobs:
   zookeeper39-build:
